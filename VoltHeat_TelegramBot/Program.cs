@@ -9,46 +9,7 @@ public class Program
 {
     public static string token { get; set; } = "7580066425:AAHM1S9ybfK4t_ZxYc-wky0vtLuJEXWQOQU";
     public static Host telegramBot = new(token);
-
-    private async Task HandleCallbackQueryAsync(ITelegramBotClient client, CallbackQuery callbackQuery)
-    {
-        //if (callbackQuery.Data == "go_back")
-        //{
-        //    await SelectOption(client, callbackQuery.);
-        //}
-    }
-
-    private static async void SelectOption(ITelegramBotClient client, Update update)
-    {
-        switch (update.Message?.Text)
-        {
-            case "ТЕНовий котел":
-                string tmp = "C:\\Users\\PC\\source\repos\\VoltHeat_TelegramBot\\VoltHeat_TelegramBot\\Images";
-                string text = "ТЕНовий котел опалення є одним із найпоширеніших як у побутовому, так і в промисловому використанні.\r\nПереваги:\r\n1) Простота і надійність: проста конструкція ТЕНових котлів забезпечує їх надійність і зручність в обслуговуванні. Вони ідеально підходять для домовласників, які віддають перевагу простим і зрозумілим технологіям.\r\n2) Економія: ці котли часто дешевші під час купівлі та встановлення, порівняно з іншими видами електрокотлів.\r\nНедоліки:\r\n1) Утворення накипу: в регіонах з жорсткою водою ТЕНи можуть швидко заростати накипом, що вимагає їх регулярного чищення або заміни.\r\n2) Чутливість до напруги: у більшості випадків знадобляться запобіжник від перепадів напруги в мережі.";
-                using (var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    await client.SendPhotoAsync(
-                        chatId: update.Message.Chat,
-                        photo: new InputFileStream(stream, Path.GetFileName(tmp)),
-                        caption: text
-                    );
-                }
-                break;
-            case "Індукційний котел":
-                break;
-            case "Електродний котел":
-                break;
-            case "\u25C0\uFE0F Назад":
-                await client.SendTextMessageAsync(
-                chatId: update.Message.Chat,
-                text: "Виберіть пункт",
-                replyMarkup: telegramBot.replyKeyboard
-                );
-                break;
-        }
-    }
-
-
+    
     private static async void OnMessage(ITelegramBotClient client, Update update)
     {
         if (update.Message?.Text == "/menu")
@@ -61,6 +22,7 @@ public class Program
         }
         else
         {
+            string tmp, text;
             switch (update.Message?.Text)
             {
                 case "\u26A1 Типи електрокотлів":
@@ -87,6 +49,50 @@ public class Program
                    chatId: update.Message.Chat,
                    text: "option 4"
                    );
+                    break;
+                case "ТЕНовий котел":
+                    tmp = "C:\\Users\\PC\\source\\repos\\VoltHeat_TelegramBot\\VoltHeat_TelegramBot\\Images\\1st_kotel.jpg";
+                    text = "ТЕНовий котел опалення є одним із найпоширеніших як у побутовому, так і в промисловому використанні.\r\nПереваги:\r\n1) Простота і надійність: проста конструкція ТЕНових котлів забезпечує їх надійність і зручність в обслуговуванні. Вони ідеально підходять для домовласників, які віддають перевагу простим і зрозумілим технологіям.\r\n2) Економія: ці котли часто дешевші під час купівлі та встановлення, порівняно з іншими видами електрокотлів.\r\nНедоліки:\r\n1) Утворення накипу: в регіонах з жорсткою водою ТЕНи можуть швидко заростати накипом, що вимагає їх регулярного чищення або заміни.\r\n2) Чутливість до напруги: у більшості випадків знадобляться запобіжник від перепадів напруги в мережі.";
+                    using (var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        await client.SendPhotoAsync(
+                            chatId: update.Message.Chat,
+                            photo: new InputFileStream(stream, Path.GetFileName(tmp)),
+                            caption: text
+                        );
+                    }
+                    break;
+
+                case "Індукційний котел":
+                    tmp = "C:\\Users\\PC\\source\\repos\\VoltHeat_TelegramBot\\VoltHeat_TelegramBot\\Images\\2nd_kotel.jpg";
+                    text = "Індукційний котел опалення вважається одними з найсучасніших і найефективніших видів електричних котлів.\r\nПереваги:\r\n1) Висока ефективність: завдяки використанню індукційного нагріву знижується енергоспоживання та експлуатаційні витрати, що робить ці котли найбільш ефективнішими серед всіх типів електрокотлів.\r\n2) Більш низькі витрати: завдяки більш ефективній роботі індукційний котел витрачає менше електроенергії (до 30%). На тривалій дистанції відбиває вищу ціну порівняно з ТЕНовими моделями.\r\n3) Довговічність: відсутність рухомих частин і менший ризик утворення накипу збільшують термін служби котла (до 40 років).\r\nНедоліки:\r\n1) Висока вартість: індукційні котли зазвичай дорожчі за ТЕНові (в середньому в 2-5 разів).\r\n2) Габарити і вага: побутові моделі можуть важити до 80 кг.\r\n3) Складність в установці та обслуговуванні: для установки і обслуговування може знадобитися спеціалізоване обладнання та вміння.";
+                    using (var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        await client.SendPhotoAsync(
+                            chatId: update.Message.Chat,
+                            photo: new InputFileStream(stream, Path.GetFileName(tmp)),
+                            caption: text
+                        );
+                    }
+                    break;
+                case "Електродний котел":
+                    tmp = "C:\\Users\\PC\\source\\repos\\VoltHeat_TelegramBot\\VoltHeat_TelegramBot\\Images\\3rd_kotel.jpg";
+                    text = "Ці котли відрізняється від традиційного методу нагрівання за допомогою нагрівальних елементів, таких як ТЕНи.\r\nПереваги:\r\n1) Високий ККД: завдяки прямому нагріванню теплоносія, електродні котли мають високий ККД (в районі 100%).\r\n2) Компактні розміри: вони займають менше місця порівняно з іншими типами котлів.\r\n3) Простота встановлення та обслуговування: електродні котли мають простішу конструкцію, що спрощує і монтаж, і догляд за обладнанням.\r\nНедоліки:\r\n1) Вимоги до якості води: для роботи електродних котлів потрібна вода з певним рівнем мінералів, щоб вона могла проводити електрику. Вода не повинна бути занадто чистою або занадто жорсткою, щоб уникнути швидкого зношення електродів і утворення накипу.\r\n2) Регулярний моніторинг і контроль якості води є невід’ємною частиною експлуатації електродного котла.\r\n3) Зношування електродів: з часом електроди будуть зношуватись, що вимагатиме їх заміни.";
+                    using (var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        await client.SendPhotoAsync(
+                            chatId: update.Message.Chat,
+                            photo: new InputFileStream(stream, Path.GetFileName(tmp)),
+                            caption: text
+                        );
+                    }
+                    break;
+                case "\u25C0\uFE0F Назад":
+                    await client.SendTextMessageAsync(
+                    chatId: update.Message.Chat,
+                    text: "Виберіть пункт",
+                    replyMarkup: telegramBot.replyKeyboard
+                    );
                     break;
                 default:
                     await client.SendTextMessageAsync(
