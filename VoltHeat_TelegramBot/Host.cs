@@ -24,7 +24,7 @@ namespace VoltHeat_TelegramBot
             replyKeyboard = new ReplyKeyboardMarkup(new[]
             {
             new KeyboardButton[] { "\u26A1 Типи електрокотлів", "\U0001F4D9 Контактна інформація"},
-            new KeyboardButton[] { "\U00002139\U0000FE0F  Інформація про бота", "\U0001F916 Чат з АІ" }
+            new KeyboardButton[] { "\U00002139\U0000FE0F Інформація про бота", "\U0001F916 Чат з АІ" }
             })
             {
                 ResizeKeyboard = true
