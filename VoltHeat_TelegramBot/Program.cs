@@ -14,7 +14,7 @@ using Azure.Core;
 public class Program
 {
     public static string token { get; set; } = "7580066425:AAHM1S9ybfK4t_ZxYc-wky0vtLuJEXWQOQU";
-    private static readonly string openAiApiKey = "";
+    private static readonly string openAiApiKey = "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";
     public static Host telegramBot = new(token);
 
     private static async Task<string> GetChatGptResponse(string message)
