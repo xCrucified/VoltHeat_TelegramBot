@@ -9,12 +9,11 @@ using Telegram.Bot.Types.ReplyMarkups;
 using VoltHeat_TelegramBot;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
-using Azure.Core;
 
 public class Program
 {
     public static string token { get; set; } = "7580066425:AAHM1S9ybfK4t_ZxYc-wky0vtLuJEXWQOQU";
-    private static readonly string openAiApiKey = "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";
+    private static readonly string openAiApiKey = "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";
     public static Host telegramBot = new(token);
 
     private static async Task<string> GetChatGptResponse(string message)
@@ -22,23 +21,23 @@ public class Program
         try
         {
             var client = new RestClient("https://api.openai.com/v1/chat/completions");
-            var request = new RestRequest();
+            var request = new RestRequest(Method.Post);
 
-            request.AddHeader("Authorization", $"{openAiApiKey}");
-            request.AddHeader("OpenAI-Organization", "org - GTgO0oq08T1IdISMY62JeIBy");
-            request.AddHeader("Content-Type", $"{openAiApiKey}");
+            // Корректно установим заголовки
+            request.AddHeader("Authorization", $"Bearer {openAiApiKey}");
+            request.AddHeader("Content-Type", "application/json");
 
+            // Создание JSON тела запроса
             var requestBody = new
             {
-                model = "gpt-3.5-turbo-1106",
+                model = "gpt-3.5-turbo",  // Убедитесь, что модель существует и доступна
                 messages = new[]
                 {
-                new { role = "user", content = "It's a test" },
-                
+                new { role = "user", content = message }
             }
             };
 
-            request.AddJsonBody(requestBody); // Не нужно сериализовать вручную, RestSharp сделает это автоматически
+            request.AddJsonBody(requestBody); // RestSharp автоматически сериализует объект в JSON
             var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
@@ -48,7 +47,7 @@ public class Program
             }
             else
             {
-                Console.WriteLine($"Ошибка запроса: {response.ErrorMessage}");
+                Console.WriteLine($"Ошибка запроса: {response.StatusCode} - {response.Content}");
                 return "Произошла ошибка при обращении к ChatGPT.";
             }
         }
@@ -152,6 +151,7 @@ public class Program
                         chatId: update.Message.Chat,
                         text: response
                     );
+                    Console.WriteLine($"ChatGpt: { response }");
                     break;
             }
         }
