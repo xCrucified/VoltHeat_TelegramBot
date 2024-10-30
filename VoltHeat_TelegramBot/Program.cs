@@ -13,7 +13,7 @@ using System.Reflection;
 public class Program
 {
     public static string token { get; set; } = "7580066425:AAHM1S9ybfK4t_ZxYc-wky0vtLuJEXWQOQU";
-    private static readonly string openAiApiKey = "sksk-admin-FGTm8SQqXfXumbp6mg0NsNq6orUkeO-mi12lNH9k-rnCHEBhsNQisXjBEQT3BlbkFJm-zVMPv3TGT-uXh1hwyIgL75H0mf0mnL33WJoftMIrhE-CyR6zMoH3q-IA";
+    private static readonly string openAiApiKey = "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";
     public static Host telegramBot = new(token);
 
     private static async Task<string> GetChatGptResponse(string message)
