@@ -17,47 +17,6 @@ public class Program
     private static readonly string openAiApiKey = "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";
     public static Host telegramBot = new(token);
 
-    private static async Task<string> GetChatGptResponse(string message)
-    {
-        try
-        {
-            var client = new RestClient("https://api.openai.com/v1/chat/completions");
-            var request = new RestRequest(Method.Post);
-
-            request.AddHeader("Authorization", $"{openAiApiKey}");
-            request.AddHeader("OpenAI-Organization", "org - GTgO0oq08T1IdISMY62JeIBy");
-            request.AddHeader("Content-Type", $"{openAiApiKey}");
-
-            var requestBody = new
-            {
-                model = "gpt-3.5-turbo-1106",
-                messages = new[]
-                {
-                new { role = "user", content = "It's a test" },
-                
-            }
-            };
-
-            request.AddJsonBody(requestBody); // Не нужно сериализовать вручную, RestSharp сделает это автоматически
-            var response = await client.ExecuteAsync(request);
-
-            if (response.IsSuccessful)
-            {
-                dynamic responseObject = JsonConvert.DeserializeObject(response.Content);
-                return responseObject.choices[0].message.content.ToString();
-            }
-            else
-            {
-                Console.WriteLine($"Ошибка запроса: {response.ErrorMessage}");
-                return "Произошла ошибка при обращении к ChatGPT.";
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Исключение: {ex.Message}");
-            return "Произошла ошибка при обработке запроса.";
-        }
-    }
     private static async void OnMessage(ITelegramBotClient client, Update update)
     {
         if (update.Message?.Text == "/start")
@@ -147,10 +106,9 @@ public class Program
                     );
                     break;
                 default:
-                    string response = await GetChatGptResponse(update.Message.Text);
                     await client.SendTextMessageAsync(
                         chatId: update.Message.Chat,
-                        text: response
+                        text: "Error"
                     );
                     break;
             }
